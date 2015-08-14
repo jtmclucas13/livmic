@@ -1,14 +1,40 @@
 <head>
-  <title>livmic</title>
+  <title>LivMic</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  {{> header}}
+  {{> filterBar}}
+  {{#each videos}}
+  	{{> video}}
+  {{/each}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="header">
+  <button>Search</button>
+  <h1>L&imacr;vMic</h1>
+  <button>Settings</button>
+</template>
+
+<template name="filterBar">
+	<button>Location</button>
+	<button>Trending</button>
+	<button>Top Rated</button>
+	<button>Genre</button>
+</template>
+
+<template name="video">
+	<h2>{{title}}</h2>
+	<p>Created At: {{createdAt}}</p>
+	{{#if isLive}}
+		<p>LIVE</p>
+	{{/if}}
+	<p>Viewers: {{viewers}}</p>
+	<p>Location: {{location}}</p>
+	<!--<ul>
+		{{#each genres}}
+			<li><p>{{genre}}</p></li>
+		{{/each}}
+	</ul>-->
+	<p>Created by: {{creator}}</p>
 </template>
