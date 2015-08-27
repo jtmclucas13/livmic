@@ -3,38 +3,65 @@
 </head>
 
 <body>
-  {{> header}}
-  {{> filterBar}}
-  {{#each videos}}
-  	{{> video}}
-  {{/each}}
 </body>
 
+<template name="home">
+	{{> header}}
+	{{> filterBar}}
+	{{> videos}}
+	{{> yield "searchArea"}}
+</template>
+
 <template name="header">
-  <button>Search</button>
+  <a href="#">Search</a>
   <h1>L&imacr;vMic</h1>
-  <button>Settings</button>
+  <a href="#">Settings</a>
 </template>
 
 <template name="filterBar">
-	<button>Location</button>
-	<button>Trending</button>
-	<button>Top Rated</button>
-	<button>Genre</button>
+	<a href="{{pathFor route='location'}}" class="locationSearch">Location</a>
+	<a href="{{pathFor route='home'}}" class="trendingFilter">Trending</a>
+	<a href="{{pathFor route='home'}}" class="topRatedFilter">Top Rated</a>
+	<a href="{{pathFor route='genre'}}" class="genreSearch">Genre</a>
 </template>
 
-<template name="video">
-	<h2>{{title}}</h2>
-	<p>Created At: {{createdAt}}</p>
-	{{#if isLive}}
-		<p>LIVE</p>
-	{{/if}}
-	<p>Viewers: {{viewers}}</p>
-	<p>Location: {{location}}</p>
-	<!--<ul>
-		{{#each genres}}
-			<li><p>{{genre}}</p></li>
-		{{/each}}
-	</ul>-->
-	<p>Created by: {{creator}}</p>
+<template name="videos">
+	{{#each this}}
+		<h2>{{title}}</h2>
+		<p>Created At: {{createdAt}}</p>
+		{{#if isLive}}
+			<p>LIVE</p>
+		{{/if}}
+		<p>Viewers: {{uniqueViewers}}</p>
+		<p>Views: {{views}}</p>
+		<p>Location: {{location}}</p>
+		<ul>
+			{{#each genres}}
+				<li><p>{{this}}</p></li>
+			{{/each}}
+		</ul>
+		<p>Created by: {{creator}}</p>
+	{{/each}}
+</template>
+
+<!-- this is not modular -->
+<template name="genreSearch">
+	<div class="leftSlideModal">
+		<h2>Genres</h2>
+		<ul>
+			{{#each genres}}
+				<li class="{{#if hasVideo}}selectable{{/if}} {{selected}}"><p>{{this.name}}</p></li>
+			{{/each}}
+		</ul>
+	</div>
+</template>
+<template name="locationSearch">
+	<div class="leftSlideModal">
+		<h2>Locations</h2>
+		<ul>
+			{{#each locations}}
+				<li class="{{#if hasVideo}}selectable{{/if}} {{selected}}"><p>{{this.name}}</p></li>
+			{{/each}}
+		</ul>
+	</div>
 </template>

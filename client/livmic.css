@@ -1,1 +1,8 @@
 /* CSS declarations go here */
+.selectable{
+	font-weight: bold;
+}
+
+.selected{
+	color: orange;
+}
